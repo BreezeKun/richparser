@@ -116,7 +116,7 @@ parser("_ol&start=3_li:1_li:2")
 ### Figure with image and caption
 
 ```python
-parser("_figure_img&src=a.jpg_figcaption:Hello")
+parse("_figure_img&src=a.jpg_figcaption:Hello")
 ```
 
 ```html
