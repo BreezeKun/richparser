@@ -1,0 +1,13 @@
+[project]
+name = "richparser"
+version = "0.1.0"
+description = "Custom underscore-based markup to HTML parser for telegram"
+authors = [
+    { name = "Breeze" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
