@@ -101,7 +101,7 @@ Nesting can go as deep as needed
 ### Ordered list starting at 3
 
 ```python
-p.get_text("_ol&start=3_li:1_li:2")
+parser("_ol&start=3_li:1_li:2")
 ```
 
 ```html
