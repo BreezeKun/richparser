@@ -147,6 +147,13 @@ parse("_figure_img&src=a.jpg_figcaption:Hello")
 - Self-closing tags (`img`, `input`, `br`, `hr`, etc.) are rendered without a closing tag.
 - Tag nesting is inferred from the token order; every opened container tag is closed automatically.
 
+---
+
+## few limitations
+
+- since "_" is seprator you wont be able to use it 
+- and for details tag "_details:_summary:Text_p:open (you need to use any tag like i have used p to use it)"
+
 ## License
 
 MIT
