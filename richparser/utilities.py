@@ -1,40 +1,50 @@
 import re
 
-SELF_CLOSING = {
+SELF_CLOSING: set[str] = {
     "img", "video", "audio", "hr", "br",
     "tg-map", "tg-emoji", "tg-time",
 }
 
-VOID_INPUT = "input"
+VOID_INPUT: str = "input"
 
-TREE_RULES = {
-    "ul": ("li",),
-    "ol": ("li",),
-    "table": ("tr",),
-    "tr": ("td", "th"),
+TREE_RULES: dict[str, tuple[str, ...]] = {
+    "ul":      ("li",),
+    "ol":      ("li",),
+    "table":   ("tr",),
+    "tr":      ("td", "th"),
 
-    "tg-collage": ("img", "video", "figcaption"),
+    "tg-collage":   ("img", "video", "figcaption"),
     "tg-slideshow": ("img", "video", "figcaption"),
 
-    "figure": ("img", "video", "audio", "tg-collage", "tg-slideshow", "figcaption"),
+    "figure":  ("img", "video", "audio", "tg-collage", "tg-slideshow", "figcaption"),
+
+    "details": ("summary", "p", "span", "ul", "ol", "table",
+                "b", "i", "s", "u", "a", "code", "pre",
+                "blockquote", "br", "hr", "img", "figure",
+                "tg-spoiler", "tg-math", "tg-math-block",
+                "tg-thinking", "tg-map", "tg-emoji", "tg-time"),
 }
 
-TREE_TAGS = tuple(TREE_RULES.keys())
 
-TAG_ALIASES = {
-    "spoiler": "tg-spoiler",
-    "math": "tg-math",
-    "bmath": "tg-math-block",
-    "map": "tg-map",
-    "emoji": "tg-emoji",
-    "time": "tg-time",
-    "collage": "tg-collage",
-    "slideshow": "tg-slideshow",
-    "thinking": "tg-thinking"
+TREE_TAGS: tuple[str, ...] = tuple(TREE_RULES.keys())
+
+
+TAG_ALIASES: dict[str, str] = {
+    "spoiler":    "tg-spoiler",
+    "math":       "tg-math",
+    "bmath":      "tg-math-block",
+    "map":        "tg-map",
+    "emoji":      "tg-emoji",
+    "time":       "tg-time",
+    "collage":    "tg-collage",
+    "slideshow":  "tg-slideshow",
+    "thinking":   "tg-thinking",
 }
 
-def parse_attrs(raw: str) -> dict:
-    attrs = {}
+
+
+def parse_attrs(raw: str) -> dict[str, str | None]:
+    attrs: dict[str, str | None] = {}
     for part in raw.split("&"):
         if not part:
             continue
@@ -46,24 +56,21 @@ def parse_attrs(raw: str) -> dict:
     return attrs
 
 
-def attrs_to_str(attrs: dict) -> str:
+def attrs_to_str(attrs: dict[str, str | None]) -> str:
     if not attrs:
         return ""
-    parts = []
+    parts: list[str] = []
     for k, v in attrs.items():
-        if v is None:
-            parts.append(k)
-        else:
-            parts.append(f'{k}="{v}"')
+        parts.append(k if v is None else f'{k}="{v}"')
     return " " + " ".join(parts)
 
 
-def split_token(token: str):
+def split_token(token: str) -> tuple[str, dict[str, str | None], str | None]:
     colon = re.search(r":(?!//)", token)
 
     if colon:
         head = token[:colon.start()]
-        text = token[colon.end():] or None
+        text: str | None = token[colon.end():] or None
     else:
         head = token
         text = None
@@ -79,6 +86,6 @@ def split_token(token: str):
     return tag, attrs, text
 
 __all__ = [
-    "TAG_ALIASES", "TREE_RULES", "VOID_INPUT",
+    "TAG_ALIASES", "TREE_RULES", "VOID_INPUT","parse_attrs",
     "SELF_CLOSING", "TREE_TAGS", "attrs_to_str", "split_token"
 ]
