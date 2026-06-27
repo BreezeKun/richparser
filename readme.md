@@ -12,7 +12,7 @@ pip install git+https://github.com/BreezeKun/richparser.git
 Or clone and import directly:
 
 ```python
-from richparser import Parse
+from richparser import parse
 ```
 
 ## Quick Start
