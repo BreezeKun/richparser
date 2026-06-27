@@ -12,13 +12,13 @@ pip install git+https://github.com/BreezeKun/richparser.git
 Or clone and import directly:
 
 ```python
-from richparser import Parse
+from richparser import parse
 ```
 
 ## Quick Start
 
 ```python
-from richparser import Parse
+from richparser import parse
 
 html = parse("_ol&start=3_li:1_li:2")
 
